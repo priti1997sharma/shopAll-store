@@ -1,13 +1,34 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
 
-.card{
-   border: 1px solid rgb(176, 21, 21);
-   display: flex;
-   flex-wrap: wrap;
-   flex-direction: row;
-   gap: 20px;
-   align-items: center;
-   justify-content: center;
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
 
+.head {
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar {
+  background-color: rgb(36, 35, 35);
+  color: rgb(212, 198, 198);
+}
+
+.ProctsListing {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer {
 }

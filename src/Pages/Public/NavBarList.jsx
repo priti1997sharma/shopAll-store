@@ -1,5 +1,3 @@
-
-
 export const PublicNavBarList = [
     {
         title: "Login",
