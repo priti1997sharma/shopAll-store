@@ -19,7 +19,6 @@ export const PublicRoutes = [
       { index: true, element: <Home /> }, // Home on '/'
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
-    //   { path: 'about', element: <About /> },
     {path:'navbar', element:<Navbar/>},
     {path:'card', element:<Card/>},
     {path:'footer', element:<Footer/>},

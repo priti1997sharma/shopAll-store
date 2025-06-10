@@ -5,6 +5,7 @@ import Profile from './Profile'
 import Product from './Product' 
 import Home from '../Public/Home'
 import Login from '../Auth/Login'
+import Logout from '../Auth/Logout'
 
 export const ProtectedRoutes = [
   {
@@ -13,8 +14,8 @@ export const ProtectedRoutes = [
       { index: true, element: <Home /> }, // use `index` instead of repeating path: '/'
       { path: 'profile', element: <Profile /> },
       { path: 'login', element: <Login /> },
-
       { path: 'product-list', element: <Product /> },
+      { path: 'logout', element: <Logout /> },
       { path: 'not-found', element: <NotFound /> },
       { path: '*', element: <Navigate to="/not-found" /> },
     ],

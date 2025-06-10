@@ -3,23 +3,23 @@
 export const ProtectedNavBarList = [
     {
         title: "Profile",
-        link: "profile"
+        link: "/profile"
     },
     {
         title: "Pages",
-        link: "pages",
+        link: "/pages",
     }, {
         title: "Home",
-        link: "home",
+        link: "/home",
     }, {
         title: "About",
-        link: "about",
+        link: "/about",
     }, {
         title: "Product",
-        link: "product"
+        link: "/product"
     },
     {
         title: "Logout",
-        link: "logout",
+        link: "/logout",
     }
 ];

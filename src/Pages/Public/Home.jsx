@@ -2,45 +2,66 @@ import React, { useEffect, useState } from 'react'
 import Card from './Card'
 import Footer from './Footer'
 import Navbar from '../../Routes/Navbar'
+import axios from 'axios'
 
 function Home() {
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
 
-  const data = [
-    {
-      nameImg: 'HeadPhone',
-      images:
-        'src/assest/bh41-bluetooth-wireless-over-ear-headphone-blue-500x500.webp',
-      title: 'HeadPhone',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-    },
-    {
-      images: 'src/assest/aykll_1200.jpg',
-      nameImg: 'T-Shirt',
-      title: 'T-Shirt',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-    },
-    {
-      images: 'src/assest/whatsapp-image-2023-11-07-at-6-50-38-pm-1.jpeg',
-      title: 'Shoes',
-      nameImg: 'Shoes',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-    },
-  ]
+//   const data = [
+//     {
+//       nameImg: 'HeadPhone',
+//       images:
+//         'src/assest/bh41-bluetooth-wireless-over-ear-headphone-blue-500x500.webp',
+//       title: 'HeadPhone',
+//       description:
+//         'Lorem ipsum dolor sit amet consectetur adipisicing elit Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+//     },
+//     {
+//       images: 'src/assest/aykll_1200.jpg',
+//       nameImg: 'T-Shirt',
+//       title: 'T-Shirt',
+//       description:
+//         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+//     },
+//     {
+//       images: 'src/assest/whatsapp-image-2023-11-07-at-6-50-38-pm-1.jpeg',
+//       title: 'Shoes',
+//       nameImg: 'Shoes',
+//       description:
+//         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+//     },
+//   ]
 
   const handleSearchChange = (event) => {
+    console.log("handleSearchChange");
+    console.log(event.target.value);
     setSearch(event.target.value)
   }
 
+// 
+useEffect(() => {
+    const setData = async() => {
+        console.log("on component mount");
+        const response = await axios.get("https://dummyjson.com/products?limit=3&skip=0")
+        console.log(response);
+        setFilteredData(response.data.products)
+    }
+    setData();
+   
+  }, [])  
+// 
+
   useEffect(() => {
-    const filtered = data.filter((item) =>
+    if(!search){
+        return ;
+    }
+    console.log("filter is working on page load");
+
+    const filtered = filteredData.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     )
-    setFilteredData(filtered)
+   setFilteredData(filtered)
   }, [search])
 
   return (
@@ -62,9 +83,10 @@ function Home() {
           filteredData.map((item, index) => (
             <Card
               key={index}
-              name={item.nameImg}
+              id={item.id}
               images={item.images}
               title={item.title}
+              price={item.price}
               description={item.description}
             />
           ))
