@@ -50,7 +50,7 @@ function Product() {
   }
 
   const handleClick = () => {
-    navigate = '/createProduct'
+    navigate('/createProduct')
   }
 
   return (
