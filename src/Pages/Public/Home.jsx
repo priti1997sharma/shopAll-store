@@ -3,10 +3,25 @@ import Card from './Card'
 import Footer from './Footer'
 import Navbar from '../../Routes/Navbar'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Head from './Head'
+import { GetToken } from '../../Utils/Storage'
 
 function Home() {
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
+  const token = GetToken();
+  let addButton = "";
+
+  useEffect(() => {
+    if(!token){
+      return ;
+    }
+    addButton = <button className="btn btn-primary" onClick={()=>{
+      navigate('/createProduct')
+    }}>ADD</button>
+  },[token])
+
 
 //   const data = [
 //     {
@@ -32,6 +47,8 @@ function Home() {
 //         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
 //     },
 //   ]
+
+const navigate= useNavigate()
 
   const handleSearchChange = (event) => {
     console.log("handleSearchChange");
@@ -67,6 +84,7 @@ useEffect(() => {
   return (
     <>
       <Navbar />
+      <Head/>
 
       <div style={{ textAlign: 'center', margin: '20px' }}>
         <input
@@ -76,7 +94,11 @@ useEffect(() => {
           onChange={handleSearchChange}
           style={{ padding: '10px', width: '300px', fontSize: '16px' }}
         />
+
+{addButton}
       </div>
+
+      
 
       <div className="card">
         {filteredData.length > 0 ? (

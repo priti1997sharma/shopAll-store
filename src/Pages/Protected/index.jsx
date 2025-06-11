@@ -16,6 +16,7 @@ export const ProtectedRoutes = [
       { path: 'profile', element: <Profile /> },
       { path: 'login', element: <Login /> },
       { path: 'createProduct', element: <CreateProduct /> },
+      { path: 'updateProduct', element: <CreateProduct /> },
       { path: 'product-list', element: <Product /> },
       { path: 'logout', element: <Logout /> },
       { path: 'not-found', element: <NotFound /> },

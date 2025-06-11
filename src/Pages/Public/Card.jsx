@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
+import { GetToken } from '../../Utils/Storage'
+import { useNavigate } from 'react-router-dom';
 
 function Card(props) {
   const { images, title, description } = props
+  const [editBtn , setEditBtn] = useState("")
+  const token = GetToken();
+  const navigate = useNavigate();
+  useEffect( () => {
+    if(!token){
+      return ;
+    }
+    console.log(token);
+    setEditBtn( <button className="btn btn-primary" onClick={() => {
+      navigate("/updateProduct")
+    }}>Edit</button>)
+  },[token])
   return (
     <div>
       <div className="card bg-base-100 w-96 shadow-sm">
@@ -15,8 +29,9 @@ function Card(props) {
           <h2 className="card-title">{title} </h2>
           <p>{description}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Edit</button>
+            {editBtn} <button className="btn btn-primary" >Delete</button>
           </div>
+          
         </div>
       </div>
     </div>
