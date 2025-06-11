@@ -1,13 +1,42 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
 
-.card{
-   border: 1px solid rgb(176, 21, 21);
-   display: flex;
-   flex-wrap: wrap;
-   flex-direction: row;
-   gap: 20px;
-   align-items: center;
-   justify-content: center;
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
 
+.head {
+  display: flex;
+  justify-content: center;
+}
+
+.hero {
+  background-image: url(assest/bgI.avif);
+  color: white;
+}
+
+.heroi {
+  background-image: url(assest/register.avif);
+}
+h1 {
+  align-items: center;
+}
+
+.userProfile {
+  border-radius: 10%;
+  margin-top: 20px;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.row {
+  width: 50%;
 }

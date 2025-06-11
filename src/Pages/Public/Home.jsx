@@ -13,14 +13,14 @@ function Home() {
   const token = GetToken();
   let addButton = "";
 
-  useEffect(() => {
-    if(!token){
-      return ;
-    }
-    addButton = <button className="btn btn-primary" onClick={()=>{
-      navigate('/createProduct')
-    }}>ADD</button>
-  },[token])
+  // useEffect(() => {
+  //   if(!token){
+  //     return ;
+  //   }
+  //   addButton = <button className="btn btn-primary" onClick={()=>{
+  //     navigate('/createProduct')
+  //   }}>ADD</button>
+  // },[token])
 
 
 //   const data = [
