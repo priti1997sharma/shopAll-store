@@ -5,7 +5,11 @@ function Profile() {
         <div
           className="row"
           style={{ display: 'flex', justifyContent: 'center' }}>
-          <img src="src/assest/U.profile.jpeg" alt="" className="userProfile" />
+          <img
+            src="src/assest/male-face-avatar-on-white-260nw-562359640.webp"
+            alt=""
+            className="userProfile"
+          />
         </div>
         <div className="row">
           <ul className="list bg-base-100 rounded-box shadow-md">

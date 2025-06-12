@@ -28,8 +28,9 @@ h1 {
 }
 
 .userProfile {
-  border-radius: 10%;
+  border-radius: 20%;
   margin-top: 20px;
+  height: px;
 }
 
 .container {
@@ -39,4 +40,21 @@ h1 {
 
 .row {
   width: 50%;
+}
+
+.ProductListing {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.paginate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cartNo {
+  padding: 10px;
 }

@@ -6,8 +6,9 @@ import Product from './Product'
 import Home from '../Public/Home'
 import Login from '../Auth/Login'
 import Logout from '../Auth/Logout'
-import ShoppingCart from './ShoppingCart'
+
 import UpdateProduct from './UpdateProduct'
+import ShoppingCart from './ShoppingCart'
 
 export const ProtectedRoutes = [
   {

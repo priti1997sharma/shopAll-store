@@ -1,185 +1,136 @@
-import React, { useEffect, useState } from 'react'
-
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Dialog, DialogTitle } from '@headlessui/react'
+import { XMarkIcon } from '@heroicons/react/24/solid'
 
 function ShoppingCart() {
-  const { id } = useParams()
-  const [heading, setHeading] = useState('Add Product')
+  const [open, setOpen] = useState(true)
 
-  const accessToken = localStorage.getItem('accessToken')
-  // const navigate = useNavigate()
-
-  //   useEffect(() => {
-  //     if (!accessToken) {
-  //       navigate('/login')
-  //     }
-  //   }, [accessToken, navigate])
-
-  const [input, setInput] = useState({
-    title: '',
-    category: '',
-    price: '',
-    discountPercentage: '',
-    rating: '',
-    stock: '',
-  })
-
-  const cartData = {
-    items: [
-      { id: 1, quantity: 2 },
-      { id: 2, quantity: 1 },
-    ],
-    total: 100,
-  }
-
-  const [Cart, setCart] = useState([])
-
-  useEffect(() => {
-    const cartData = async () => {
-      try {
-        const response = await axios.post(
-          'https://dummyjson.com/carts/add',
-          cartData,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }.then((response) => {
-            console.log('Cart data sent successfully:', response.data)
-          })
-        )
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    cartData()
-  }, [id])
-
-  // useEffect(() => {
-  //   const getProduct = async () => {
-  //     try {
-  //       if (!id) return
-  //       setHeading('Edit Product')
-  //       const response = await axios.get(`https://dummyjson.com/products/${id}`)
-  //       console.log(response.data)
-  //       setInput((obj) => ({
-  //         ...obj,
-  //         ...response.data,
-  //       }))
-  //     } catch (err) {
-  //       console.log(err.message)
-  //       toast.error(err.message)
-  //     }
-  //   }
-
-  //   getProduct()
-  // }, [id])
-
-  const handleChange = (event) => {
-    setInput((old) => {
-      return { ...old, [event.target.name]: event.target.value }
-      alert('Item deleted successfully')
-    })
-  }
-
-  const onSubmit = async (event) => {
-    event.preventDefault()
-    const payload = { ...input }
-
-    try {
-      if (id) {
-        const response = await axios.put(
-          `https://dummyjson.com/products/${id}`,
-          payload
-        )
-        console.log(response)
-      } else {
-        const response = await axios.post(
-          'https://dummyjson.com/products/add',
-          payload,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        console.log(response)
-      }
-      // navigate('/product')
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const handleDelete = () => {}
+  const products = [
+    {
+      id: 1,
+      name: 'Throwback Hip Bag',
+      href: '#',
+      color: 'Salmon',
+      price: '$90.00',
+      quantity: 1,
+      imageSrc:
+        'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+      imageAlt:
+        'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+    },
+    {
+      id: 2,
+      name: 'Medium Stuff Satchel',
+      href: '#',
+      color: 'Blue',
+      price: '$32.00',
+      quantity: 1,
+      imageSrc:
+        'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+      imageAlt:
+        'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    },
+  ]
 
   return (
-    <div>
-      <h1>Shopping Cart</h1>
-      <form onSubmit={onSubmit} style={{ border: '1px solid gray' }}>
-        <fieldset className="fieldset">
-          <label className="label">Product Name</label>
-          <input
-            type="text"
-            className="input"
-            placeholder="Product Name"
-            name="product_name"
-            onChange={handleChange}
-          />
-
-          <label className="label">Category</label>
-          <input
-            type="text"
-            className="input"
-            placeholder="Category"
-            name="category"
-            onChange={handleChange}
-          />
-
-          <span>
-            <button className="btn btn-primary" type="submit">
-              +
-            </button>
-          </span>
-
-          {/* Open the modal using document.getElementById('ID').showModal() method */}
-          <span>
-            <button
-              className="btn"
-              onClick={() => document.getElementById('my_modal_2').showModal()}>
-              Delete Item
-            </button>
-          </span>
-          <dialog id="my_modal_2" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Delete</h3>
-              <p className="py-4">Are you sure you want to delete this Item?</p>
-              <span style={{ padding: '10px' }}>
-                <button className="btn btn-primary">Cancel</button>
-              </span>
-
-              <span>
-                <button className="btn btn-primary" onClick={handleDelete}>
-                  Delete
+    <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
+      <div className="fixed inset-0 bg-black bg-opacity-25" />
+      <div className="fixed inset-0 overflow-y-auto">
+        <div className="flex min-h-full items-center justify-center p-4">
+          <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <div className="flex items-start justify-between">
+              <DialogTitle className="text-lg font-medium text-gray-900">
+                Shopping cart
+              </DialogTitle>
+              <div className="ml-3 flex h-7 items-center">
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                >
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Close panel</span>
+                  <XMarkIcon aria-hidden="true" className="h-6 w-6" />
                 </button>
-              </span>
+              </div>
             </div>
-            <form method="dialog" className="modal-backdrop">
-              <button>close</button>
-            </form>
-          </dialog>
 
-          <div className="toast toast-top toast-end">
-            <div className="alert alert-success">
-              <span>Deleted Item successfully.</span>
+            <div className="mt-8">
+              <div className="flow-root">
+                <ul role="list" className="-my-6 divide-y divide-gray-200">
+                  {products.map((product) => (
+                    <li key={product.id} className="flex py-6">
+                      <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                        <img
+                          alt={product.imageAlt}
+                          src={product.imageSrc}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+
+                      <div className="ml-4 flex flex-1 flex-col">
+                        <div>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <h3>
+                              <a href={product.href}>{product.name}</a>
+                            </h3>
+                            <p className="ml-4">{product.price}</p>
+                          </div>
+                          <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                        </div>
+                        <div className="flex flex-1 items-end justify-between text-sm">
+                          <p className="text-gray-500">Qty {product.quantity}</p>
+
+                          <div className="flex">
+                            <button
+                              type="button"
+                              className="font-medium text-indigo-600 hover:text-indigo-500"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
+
+            <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+              <div className="flex justify-between text-base font-medium text-gray-900">
+                <p>Subtotal</p>
+                <p>$262.00</p>
+              </div>
+              <p className="mt-0.5 text-sm text-gray-500">
+                Shipping and taxes calculated at checkout.
+              </p>
+              <div className="mt-6">
+                <a
+                  href="#"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                >
+                  Checkout
+                </a>
+              </div>
+              <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                <p>
+                  or{' '}
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Continue Shopping
+                    <span aria-hidden="true"> &rarr;</span>
+                  </button>
+                </p>
+              </div>
+            </div>
+          </Dialog.Panel>
+        </div>
+      </div>
+    </Dialog>
   )
 }
 
