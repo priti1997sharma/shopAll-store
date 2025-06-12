@@ -40,3 +40,13 @@ h1 {
 .row {
   width: 50%;
 }
+
+.ProctsListing{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+
+}
