@@ -4,57 +4,9 @@ import { useNavigate } from 'react-router-dom'
 
 function Card(props) {
 
-  const { id, images, title, description, price } = props
-  const [cart, setCart] = useState(0)
-  const navigate = useNavigate()
-  const token = GetToken()
-
-  const handleAdd = () => {
-    const newItem = { id, images, title, description, price }
-    setData((prev) => [...prev, newItem])
-    addToCart(id, title, description, price)
-  }
-
-  const addToCart = (id, title, description, price) => {
-    let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
-
-    const existing = cartBox.find((item) => item.id === id)
-
-    if (existing) {
-      existing.quantity += 1
-    } else {
-      cartBox.push({
-        id,
-        title,
-        description,
-        price,
-        quantity: 1,
-      })
-    }
-
-    localStorage.setItem('cartBox', JSON.stringify(cartBox))
-    setCart(existing ? existing.quantity : 1)
-  }
-
-  const decrementCart = () => {
-    let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
-    const index = cartBox.findIndex((item) => item.id === id)
-
-    if (index !== -1 && cartBox[index].quantity > 1) {
-      cartBox[index].quantity -= 1
-      localStorage.setItem('cartBox', JSON.stringify(cartBox))
-      setCart(cartBox[index].quantity)
-    } else if (index !== -1) {
-      cartBox.splice(index, 1)
-      localStorage.setItem('cartBox', JSON.stringify(cartBox))
-      setCart(0)
-    }
-  }
-
-  const incrementCart = () => {
-    addToCart(id, title, description, price)
-  }
-
+  const { id, images, title, description, price, quantity, incrementCart, decrementCart } = props
+  
+const navigate =useNavigate();
   return (
     <div>
       <div className="card bg-base-100 w-96 shadow-sm">
@@ -74,19 +26,34 @@ function Card(props) {
             style={{ border: '1px solid grey' }}>
             <button
               className="btn btn-neutral btn-outline"
-              onClick={decrementCart}>
+              onClick={() => {
+                decrementCart(id, images, title, description, price )
+              }}>
               -
             </button>
-            <p style={{ padding: '10px', textAlign: 'center' }}>{cart}</p>
+            <p style={{ padding: '10px', textAlign: 'center' }}>{quantity || 0}</p>
             <button
               className="btn btn-neutral btn-outline"
-              onClick={incrementCart}>
+              onClick={() => {
+                incrementCart(id, images, title, description, price )
+              }}>
               +
             </button>
           </div>
 
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleAdd}>
+            {/* <button className="btn btn-primary" onClick={() => {
+                handleAdd(id, images, title, description, price )
+              }
+            }>
+              Add to Cart
+            </button> */}
+
+<button className="btn btn-primary" onClick={() => {
+
+                navigate("/shoppingCart")
+              }
+            }>
               Add to Cart
             </button>
 

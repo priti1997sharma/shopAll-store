@@ -5,22 +5,20 @@ import Navbar from '../../Routes/Navbar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Head from './Head'
-import { GetToken } from '../../Utils/Storage'
-import About from './About'
 
 function Home() {
 
   const [search, setSearch] = useState('')
-  const [filteredData, setFilteredData] = useState([])
-  const token = GetToken()
-  const [cart, setCart] = useState(0)
+  const [productList, setProductList] = useState([])
+  const [navCartCount, setNavCartCount] = useState(0);
+  
+  
   let addButton = ''
 
   const navigate = useNavigate()
 
   const handleSearchChange = (event) => {
-    console.log('handleSearchChange')
-    console.log(event.target.value)
+    console.log("=========",event.target.value)
     setSearch(event.target.value)
   }
 
@@ -31,9 +29,25 @@ function Home() {
         'https://dummyjson.com/products?limit=3&skip=0'
       )
       console.log(response)
-      setFilteredData(response.data.products)
+      
+      let cartBox = JSON.parse(localStorage.getItem('cartBox'))
+      cartBox = cartBox || [];
+    
+      cartBox.map(card => {
+        response.data.products.map( product => {
+          if(card.id === product.id){
+            product.quantity = card.quantity;
+          }
+
+        })
+      });
+      setProductList(response.data.products);
+      setNavCartCount(cartBox.length);
+      //
+      
     }
     setData()
+    
   }, [])
   //
 
@@ -43,22 +57,105 @@ function Home() {
     }
     console.log('filter is working on page load')
 
-    const filtered = filteredData.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase())
-    )
-    setFilteredData(filtered)
+    const filterFunc = (product) =>
+      product.title.toLowerCase().includes(search.toLowerCase())
+    
+    const filtered = productList.filter(filterFunc)
+    setProductList(filtered)
   }, [search])
 
+  // Card Funcitonality
+
+  
+
+  const handleAdd = () => {
+    const newItem = { id, images, title, description, price }
+    setData((prev) => [...prev, newItem])
+    addToCart(id, title, description, price)
+  }
+
+  const addToCart = (id, images, title, description, price) => {
+    let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
+
+    const existing = cartBox.find((item) => item.id === id)
+
+    if (existing) {
+      existing.quantity += 1
+    } else {
+      cartBox.push({
+        id,
+        images,
+        title,
+        description,
+        price,
+        quantity: 1,
+      })
+    }
+    // we have to syn the local storage data into the product list state
+    const newFilter = productList.map((product) => {
+       
+      if(product.id == id){
+        if ( product.quantity){
+          product.quantity = product.quantity + 1; 
+        }else{
+          product.quantity = 1;
+        }              
+      }
+      
+      return product;
+    });
+    console.log(newFilter);
+    setProductList(newFilter);
+    localStorage.setItem('cartBox', JSON.stringify(cartBox))
+    setNavCartCount(cartBox.length);
+    // setCartCounter(existing ? existing.quantity : 1)
+  }
+
+  const decrementCart = (id, images, title, description, price ) => {
+    let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
+    const index = cartBox.findIndex((item) => item.id === id)
+
+    if (index !== -1 && cartBox[index].quantity > 1) {
+      cartBox[index].quantity -= 1
+      localStorage.setItem('cartBox', JSON.stringify(cartBox))
+      // setCartCounter(cartBox[index].quantity)
+    } else if (index !== -1) {
+      cartBox.splice(index, 1)
+      localStorage.setItem('cartBox', JSON.stringify(cartBox))
+    }
+    setNavCartCount(cartBox.length);
+
+    const newFilter = productList.map((product) => {
+       
+      if(product.id == id){
+        if ( product.quantity > 1){
+          product.quantity = product.quantity - 1; 
+        }else{
+          // delete product.quantity;
+          product.quantity = 0;
+        }              
+      }
+      
+      return product;
+    });
+    console.log(newFilter);
+    setProductList(newFilter);
+  }
+
+  const incrementCart = (id, images, title, description, price ) => {
+    addToCart(id,images, title, description, price)
+  }
+
+  // 
   return (
     <>
-      <Navbar />
+      <Navbar navCartCount={navCartCount} />
       <Head />
 
       <div style={{ textAlign: 'center', margin: '20px' }}>
         <input
           type="text"
           placeholder="Search product..."
-          value={search}
           onChange={handleSearchChange}
           style={{ padding: '10px', width: '300px', fontSize: '16px' }}
         />
@@ -67,8 +164,8 @@ function Home() {
       </div>
 
       <div className="card">
-        {filteredData.length > 0 ? (
-          filteredData.map((item, index) => (
+        {productList.length > 0 ? (
+          productList.map((item, index) => (
             <Card
               key={index}
               id={item.id}
@@ -76,6 +173,9 @@ function Home() {
               title={item.title}
               price={item.price}
               description={item.description}
+              quantity={item.quantity}
+              incrementCart={incrementCart}
+              decrementCart={decrementCart}
             />
           ))
         ) : (

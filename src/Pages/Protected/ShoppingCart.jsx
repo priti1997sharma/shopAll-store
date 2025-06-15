@@ -1,36 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
 function ShoppingCart() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
+  const [products, setProducts]=useState([]);
 
-  const products = [
-    {
-      id: 1,
-      name: 'Throwback Hip Bag',
-      href: '#',
-      color: 'Salmon',
-      price: '$90.00',
-      quantity: 1,
-      imageSrc:
-        'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-      imageAlt:
-        'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-      id: 2,
-      name: 'Medium Stuff Satchel',
-      href: '#',
-      color: 'Blue',
-      price: '$32.00',
-      quantity: 1,
-      imageSrc:
-        'https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-      imageAlt:
-        'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-  ]
+ 
+  const init =()=>{
+    let cartBox = JSON.parse(localStorage.getItem('cartBox'))
+    setProducts(cartBox)
+  }
+  useEffect(()=>{
+    init()
+
+  },[])
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)} className="relative z-10">
@@ -62,8 +46,8 @@ function ShoppingCart() {
                     <li key={product.id} className="flex py-6">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
-                          alt={product.imageAlt}
-                          src={product.imageSrc}
+                          alt={product.title}
+                          src={product.images[0]}
                           className="h-full w-full object-cover"
                         />
                       </div>
