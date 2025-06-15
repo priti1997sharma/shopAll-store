@@ -6,12 +6,13 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Head from './Head'
 import { GetToken } from '../../Utils/Storage'
+import About from './About'
 
 function Home() {
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
-  const token = GetToken();
-  let addButton = "";
+  const token = GetToken()
+  let addButton = ''
 
   // useEffect(() => {
   //   if(!token){
@@ -22,69 +23,69 @@ function Home() {
   //   }}>ADD</button>
   // },[token])
 
+  //   const data = [
+  //     {
+  //       nameImg: 'HeadPhone',
+  //       images:
+  //         'src/assest/bh41-bluetooth-wireless-over-ear-headphone-blue-500x500.webp',
+  //       title: 'HeadPhone',
+  //       description:
+  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+  //     },
+  //     {
+  //       images: 'src/assest/aykll_1200.jpg',
+  //       nameImg: 'T-Shirt',
+  //       title: 'T-Shirt',
+  //       description:
+  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+  //     },
+  //     {
+  //       images: 'src/assest/whatsapp-image-2023-11-07-at-6-50-38-pm-1.jpeg',
+  //       title: 'Shoes',
+  //       nameImg: 'Shoes',
+  //       description:
+  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
+  //     },
+  //   ]
 
-//   const data = [
-//     {
-//       nameImg: 'HeadPhone',
-//       images:
-//         'src/assest/bh41-bluetooth-wireless-over-ear-headphone-blue-500x500.webp',
-//       title: 'HeadPhone',
-//       description:
-//         'Lorem ipsum dolor sit amet consectetur adipisicing elit Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-//     },
-//     {
-//       images: 'src/assest/aykll_1200.jpg',
-//       nameImg: 'T-Shirt',
-//       title: 'T-Shirt',
-//       description:
-//         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-//     },
-//     {
-//       images: 'src/assest/whatsapp-image-2023-11-07-at-6-50-38-pm-1.jpeg',
-//       title: 'Shoes',
-//       nameImg: 'Shoes',
-//       description:
-//         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-//     },
-//   ]
-
-const navigate= useNavigate()
+  const navigate = useNavigate()
 
   const handleSearchChange = (event) => {
-    console.log("handleSearchChange");
-    console.log(event.target.value);
+    console.log('handleSearchChange')
+    console.log(event.target.value)
     setSearch(event.target.value)
   }
 
-// 
-useEffect(() => {
-    const setData = async() => {
-        console.log("on component mount");
-        const response = await axios.get("https://dummyjson.com/products?limit=3&skip=0")
-        console.log(response);
-        setFilteredData(response.data.products)
+  //
+  useEffect(() => {
+    const setData = async () => {
+      console.log('on component mount')
+      const response = await axios.get(
+        'https://dummyjson.com/products?limit=3&skip=0'
+      )
+      console.log(response)
+      setFilteredData(response.data.products)
     }
-    setData();
-   
-  }, [])  
-// 
+    setData()
+  }, [])
+  //
 
   useEffect(() => {
-    if(!search){
-        return ;
+    if (!search) {
+      return
     }
-    console.log("filter is working on page load");
+    console.log('filter is working on page load')
 
     const filtered = filteredData.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase())
     )
-   setFilteredData(filtered)
+    setFilteredData(filtered)
   }, [search])
 
   return (
     <>
       <Navbar />
-      <Head/>
+      <Head />
 
       <div style={{ textAlign: 'center', margin: '20px' }}>
         <input
@@ -95,10 +96,8 @@ useEffect(() => {
           style={{ padding: '10px', width: '300px', fontSize: '16px' }}
         />
 
-{addButton}
+        {addButton}
       </div>
-
-      
 
       <div className="card">
         {filteredData.length > 0 ? (

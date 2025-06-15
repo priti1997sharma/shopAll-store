@@ -36,7 +36,7 @@ function Login() {
       SetToken(response?.data?.accessToken)
       console.log('response of login ', response)
       alert('Successfull Login')
-      navigate('/product-list')
+      navigate('/product')
     } catch (err) {
       console.log(err)
       alert(err.message || 'Login Failed')
