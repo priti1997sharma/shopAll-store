@@ -9,44 +9,12 @@ import { GetToken } from '../../Utils/Storage'
 import About from './About'
 
 function Home() {
+
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
   const token = GetToken()
+  const [cart, setCart] = useState(0)
   let addButton = ''
-
-  // useEffect(() => {
-  //   if(!token){
-  //     return ;
-  //   }
-  //   addButton = <button className="btn btn-primary" onClick={()=>{
-  //     navigate('/createProduct')
-  //   }}>ADD</button>
-  // },[token])
-
-  //   const data = [
-  //     {
-  //       nameImg: 'HeadPhone',
-  //       images:
-  //         'src/assest/bh41-bluetooth-wireless-over-ear-headphone-blue-500x500.webp',
-  //       title: 'HeadPhone',
-  //       description:
-  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-  //     },
-  //     {
-  //       images: 'src/assest/aykll_1200.jpg',
-  //       nameImg: 'T-Shirt',
-  //       title: 'T-Shirt',
-  //       description:
-  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-  //     },
-  //     {
-  //       images: 'src/assest/whatsapp-image-2023-11-07-at-6-50-38-pm-1.jpeg',
-  //       title: 'Shoes',
-  //       nameImg: 'Shoes',
-  //       description:
-  //         'Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptates eligendi, sed error voluptate, magnam, voluptatem molestiae vel soluta ut vitae ducimus. Ab numquam voluptatum maiores facilis iste minus repellat necessitatibus.',
-  //     },
-  //   ]
 
   const navigate = useNavigate()
 
@@ -56,7 +24,6 @@ function Home() {
     setSearch(event.target.value)
   }
 
-  //
   useEffect(() => {
     const setData = async () => {
       console.log('on component mount')
