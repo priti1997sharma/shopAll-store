@@ -7,6 +7,7 @@ import Head from '../Public/Head'
 import { useNavigate } from 'react-router-dom'
 
 function Product() {
+  const [cart, setCart] = useState(0)
   const [productList, setProductList] = useState([])
   const [totalPages, setTotalPages] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
@@ -32,7 +33,7 @@ function Product() {
       }
     }
     fetchProduct()
-  }, [pageNumber, itemPerPage])
+  }, [pageNumber, itemPerPage, setSearch])
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value)
@@ -44,14 +45,27 @@ function Product() {
 
   console.log(filtered)
 
-  const handlePageChange = (_, value) => {
-    console.log(value)
-    setPageNumber(value)
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage)
+    }
   }
 
-  const handleClick = () => {
-    navigate('/createProduct')
+  // const handleClick = () => {
+  //   navigate('/createProduct')
+  // }
+
+  const incrementCart = () => {
+    setCart(cart + 1)
   }
+
+  const decrementCart = () => {
+    setCart(cart - 1)
+  }
+
+  // Add to cart Functionality
+
+  
 
   return (
     <div>
@@ -67,15 +81,15 @@ function Product() {
           style={{ padding: '10px', width: '300px', fontSize: '16px' }}
         />
 
-        <button
+        {/* <button
           className="btn btn-primary"
           style={{ marginLeft: '20px' }}
           onClick={handleClick}>
           ADD
-        </button>
+        </button> */}
       </div>
 
-      <div className="ProctsListing">
+      <div className="ProductListing">
         {filtered.length > 0 ? (
           filtered.map((product) => (
             <Card
@@ -90,45 +104,33 @@ function Product() {
           <p style={{ textAlign: 'center' }}>No products found</p>
         )}
       </div>
-      <div className="join">
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="1"
-          checked="checked"
-          count={totalPages}
-          page={pageNumber}
-          onChange={handlePageChange}
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="2"
-          count={totalPages}
-          page={pageNumber}
-          onChange={handlePageChange}
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="3"
-          count={totalPages}
-          page={pageNumber}
-          onChange={handlePageChange}
-        />
-        <input
-          className="join-item btn btn-square"
-          type="radio"
-          name="options"
-          aria-label="4"
-          count={totalPages}
-          page={pageNumber}
-          onChange={handlePageChange}
-        />
+
+      {/* pagination functionality */}
+      <div className="paginate">
+        <button
+          className="btn btn-outline btn-primary"
+          onClick={() => handlePageChange(pageNumber - 1)}
+          disabled={pageNumber === 1}>
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            className="btn btn-outline btn-primary"
+            key={page}
+            onClick={() => handlePageChange(page)}
+            disabled={pageNumber === page}>
+            {page}
+          </button>
+        ))}
+        <button
+          className="btn btn-outline btn-primary"
+          onClick={() => handlePageChange(pageNumber + 1)}
+          disabled={pageNumber === totalPages}>
+          Next
+        </button>
       </div>
+
+      {/* SetCount */}
     </div>
   )
 }
