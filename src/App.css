@@ -42,6 +42,7 @@ h1 {
   width: 50%;
 }
 
+
 .ProductListing {
   display: flex;
   justify-content: center;
@@ -57,4 +58,5 @@ h1 {
 
 .cartNo {
   padding: 10px;
+
 }
