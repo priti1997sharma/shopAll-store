@@ -32,6 +32,7 @@ function Home() {
       
       let cartBox = JSON.parse(localStorage.getItem('cartBox'))
       cartBox = cartBox || [];
+      console.log({cartBox});
     
       cartBox.map(card => {
         response.data.products.map( product => {
