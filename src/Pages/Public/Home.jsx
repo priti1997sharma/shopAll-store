@@ -5,20 +5,21 @@ import Navbar from '../../Routes/Navbar'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Head from './Head'
+import { useAppContext } from '../../Utils/AppContext'
 
 function Home() {
-
   const [search, setSearch] = useState('')
   const [productList, setProductList] = useState([])
-  const [navCartCount, setNavCartCount] = useState(0);
-  
-  
+  const [navCartCount, setNavCartCount] = useState(0)
+
+  const { theme, setTheme } = useAppContext()
+  console.log({ theme })
   let addButton = ''
 
   const navigate = useNavigate()
 
   const handleSearchChange = (event) => {
-    console.log("=========",event.target.value)
+    console.log('=========', event.target.value)
     setSearch(event.target.value)
   }
 
@@ -29,26 +30,23 @@ function Home() {
         'https://dummyjson.com/products?limit=3&skip=0'
       )
       console.log(response)
-      
-      let cartBox = JSON.parse(localStorage.getItem('cartBox'))
-      cartBox = cartBox || [];
-      console.log({cartBox});
-    
-      cartBox.map(card => {
-        response.data.products.map( product => {
-          if(card.id === product.id){
-            product.quantity = card.quantity;
-          }
 
+      let cartBox = JSON.parse(localStorage.getItem('cartBox'))
+      cartBox = cartBox || []
+      console.log({ cartBox })
+
+      cartBox.map((card) => {
+        response.data.products.map((product) => {
+          if (card.id === product.id) {
+            product.quantity = card.quantity
+          }
         })
-      });
-      setProductList(response.data.products);
-      setNavCartCount(cartBox.length);
+      })
+      setProductList(response.data.products)
+      setNavCartCount(cartBox.length)
       //
-      
     }
     setData()
-    
   }, [])
   //
 
@@ -60,14 +58,12 @@ function Home() {
 
     const filterFunc = (product) =>
       product.title.toLowerCase().includes(search.toLowerCase())
-    
+
     const filtered = productList.filter(filterFunc)
     setProductList(filtered)
   }, [search])
 
   // Card Funcitonality
-
-  
 
   const handleAdd = () => {
     const newItem = { id, images, title, description, price }
@@ -94,25 +90,24 @@ function Home() {
     }
     // we have to syn the local storage data into the product list state
     const newFilter = productList.map((product) => {
-       
-      if(product.id == id){
-        if ( product.quantity){
-          product.quantity = product.quantity + 1; 
-        }else{
-          product.quantity = 1;
-        }              
+      if (product.id == id) {
+        if (product.quantity) {
+          product.quantity = product.quantity + 1
+        } else {
+          product.quantity = 1
+        }
       }
-      
-      return product;
-    });
-    console.log(newFilter);
-    setProductList(newFilter);
+
+      return product
+    })
+    console.log(newFilter)
+    setProductList(newFilter)
     localStorage.setItem('cartBox', JSON.stringify(cartBox))
-    setNavCartCount(cartBox.length);
+    setNavCartCount(cartBox.length)
     // setCartCounter(existing ? existing.quantity : 1)
   }
 
-  const decrementCart = (id, images, title, description, price ) => {
+  const decrementCart = (id, images, title, description, price) => {
     let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
     const index = cartBox.findIndex((item) => item.id === id)
 
@@ -124,30 +119,33 @@ function Home() {
       cartBox.splice(index, 1)
       localStorage.setItem('cartBox', JSON.stringify(cartBox))
     }
-    setNavCartCount(cartBox.length);
+    setNavCartCount(cartBox.length)
 
     const newFilter = productList.map((product) => {
-       
-      if(product.id == id){
-        if ( product.quantity > 1){
-          product.quantity = product.quantity - 1; 
-        }else{
+      if (product.id == id) {
+        if (product.quantity > 1) {
+          product.quantity = product.quantity - 1
+        } else {
           // delete product.quantity;
-          product.quantity = 0;
-        }              
+          product.quantity = 0
+        }
       }
-      
-      return product;
-    });
-    console.log(newFilter);
-    setProductList(newFilter);
+
+      return product
+    })
+    console.log(newFilter)
+    setProductList(newFilter)
   }
 
-  const incrementCart = (id, images, title, description, price ) => {
-    addToCart(id,images, title, description, price)
+  const incrementCart = (id, images, title, description, price) => {
+    addToCart(id, images, title, description, price)
   }
 
-  // 
+  const handleToggle = () => {
+    setTheme(theme == 'light' ? 'dark' : 'light')
+  }
+
+  //
   return (
     <>
       <Navbar navCartCount={navCartCount} />
@@ -156,13 +154,20 @@ function Home() {
       <div style={{ textAlign: 'center', margin: '20px' }}>
         <input
           type="text"
-          placeholder="Search product..."
+          placeholder="Search product........"
           onChange={handleSearchChange}
           style={{ padding: '10px', width: '300px', fontSize: '16px' }}
         />
 
         {addButton}
       </div>
+
+      <input
+        type="checkbox"
+        onChange={handleToggle}
+        defaultChecked
+        className="toggle"
+      />
 
       <div className="card">
         {productList.length > 0 ? (

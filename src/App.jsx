@@ -1,18 +1,18 @@
 // import { Router } from 'react-router-dom'
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import './App.css'
 import { AppRoutes } from './Routes/AppRoutes'
+import { AppProvider } from './Utils/AppContext'
 
 function App() {
-
-
   return (
     <>
-    <Router>
-      <AppRoutes />
-     </Router>
-       
+      <AppProvider>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </AppProvider>
     </>
   )
 }
