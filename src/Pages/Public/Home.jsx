@@ -3,7 +3,7 @@ import Card from './Card'
 import Footer from './Footer'
 import Navbar from '../../Routes/Navbar'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import Head from './Head'
 import { useAppContext } from '../../Utils/AppContext'
 
@@ -16,7 +16,7 @@ function Home() {
   console.log({ theme })
   let addButton = ''
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const handleSearchChange = (event) => {
     console.log('=========', event.target.value)
@@ -66,9 +66,9 @@ function Home() {
   // Card Funcitonality
 
   const handleAdd = () => {
-    const newItem = { id, images, title, description, price }
+    const newItem = { id, images, title, description, price, quantity }
     setData((prev) => [...prev, newItem])
-    addToCart(id, title, description, price)
+    addToCart(id, title, description, price, quantity)
   }
 
   const addToCart = (id, images, title, description, price) => {
@@ -107,14 +107,14 @@ function Home() {
     // setCartCounter(existing ? existing.quantity : 1)
   }
 
-  const decrementCart = (id, images, title, description, price) => {
+  const decrementCart = (id, images, title, description, price, quantity) => {
     let cartBox = JSON.parse(localStorage.getItem('cartBox') || '[]')
     const index = cartBox.findIndex((item) => item.id === id)
 
     if (index !== -1 && cartBox[index].quantity > 1) {
       cartBox[index].quantity -= 1
       localStorage.setItem('cartBox', JSON.stringify(cartBox))
-      // setCartCounter(cartBox[index].quantity)
+  
     } else if (index !== -1) {
       cartBox.splice(index, 1)
       localStorage.setItem('cartBox', JSON.stringify(cartBox))
@@ -137,8 +137,8 @@ function Home() {
     setProductList(newFilter)
   }
 
-  const incrementCart = (id, images, title, description, price) => {
-    addToCart(id, images, title, description, price)
+  const incrementCart = (id, images, title, description, price, quantity) => {
+    addToCart(id, images, title, description, price, quantity)
   }
 
   const handleToggle = () => {

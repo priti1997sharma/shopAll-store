@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ProtectedNavBarList } from '../Pages/Protected/NavbarList'
 import { PublicNavBarList } from '../Pages/Public/NavBarList'
@@ -17,7 +17,20 @@ function Navbar({ navCartCount }) {
     AllNavBarList = [...PublicNavBarList]
   }
   AllNavBarList = [...AllNavBarList, ...CommonNavBarList]
-  console.log({ theme })
+
+  const [totalItem, setTotalItem] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() => {
+    const total = cartitem?.reduce((sum, item) => sum + item.quantity, 0) || 0
+    const totalAmount =
+      cartitem?.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0
+    setTotalItem(total)
+    setTotalPrice(totalAmount)
+  }, [cartitem])
+
+  console.log({ theme, navCartCount, cartitem, totalItem })
+
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
@@ -33,7 +46,6 @@ function Navbar({ navCartCount }) {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor">
-                {' '}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -43,7 +55,7 @@ function Navbar({ navCartCount }) {
               </svg>
               <span className="badge badge-sm indicator-item">
                 {/* {navCartCount} */}
-                {cartitem?.length || 0}
+                {totalItem || 0}
               </span>
             </div>
           </div>
@@ -51,8 +63,8 @@ function Navbar({ navCartCount }) {
             tabIndex={0}
             className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
             <div className="card-body">
-              <span className="text-lg font-bold">8 Items</span>
-              <span className="text-info">Subtotal: $999</span>
+              <span className="text-lg font-bold">{totalItem || 0}</span>
+              <span className="text-info">Subtotal: $ ({totalPrice})</span>
               <div className="card-actions">
                 <button className="btn btn-primary btn-block">View cart</button>
               </div>

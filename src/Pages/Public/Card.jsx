@@ -1,44 +1,48 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { useAppContext } from '../../Utils/AppContext'
 
 function Card(props) {
-  const {
-    id,
-    images,
-    title,
-    description,
-    price,
-    quantity,
-    incrementCart,
-    decrementCart,
-  } = props
+  const { id, images, title, description, price } = props
 
   const { cartitem, setCartItem } = useAppContext()
-  const navigate = useNavigate()
 
-  // add to cart functionality (set data in an array)
+  const isInCart = cartitem?.some((item) => item.id === id)
+
+  const incrementCart = (productId) => {
+    const updatedCart = cartitem.map((item) =>
+      item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+    )
+    setCartItem(updatedCart)
+  }
+
+  const decrementCart = (productId) => {
+    const item = cartitem.find((i) => i.id === productId)
+    if (item.quantity <= 1) {
+      setCartItem(cartitem.filter((i) => i.id !== productId))
+    } else {
+      const updatedCart = cartitem.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+      )
+      setCartItem(updatedCart)
+    }
+  }
 
   const handleAddToCart = () => {
-    // let storeProducts = JSON.parse(localStorage.getItem('storeProducts')) || []
-    let storedProducts = cartitem || []
-
-    console.log({ storedProducts })
-    let selectedProduct = {
+    const selectedProduct = {
       id,
       images,
       title,
       description,
       price,
-      quantity,
+      quantity: 1,
     }
     setCartItem([...cartitem, selectedProduct])
-    // storedProducts.push(selectedProduct)
-
-    // // localStorage.setItem('Addproducts', JSON.stringify(storeProducts))
-    // setCartItem(storedProducts)
-    // console.log('carttttttttttttttttt', cartitem)
   }
+
+  console.log('Cart item ------------', cartitem)
+
+  const product = cartitem.find((item) => item.id === id)
+  const currentQty = product?.quantity || 1
 
   return (
     <div>
@@ -53,33 +57,31 @@ function Card(props) {
             <strong>Price:</strong> ${price}
           </p>
 
-          <div
-            className="card-actions justify-center"
-            style={{ border: '1px solid grey' }}>
-            <button
-              className="btn btn-neutral btn-outline"
-              onClick={() =>
-                decrementCart(id, images, title, description, price)
-              }>
-              -
-            </button>
-            <p style={{ padding: '10px', textAlign: 'center' }}>
-              {quantity || 0}
-            </p>
-            <button
-              className="btn btn-neutral btn-outline"
-              onClick={() =>
-                incrementCart(id, images, title, description, price)
-              }>
-              +
-            </button>
-          </div>
-
-          <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleAddToCart}>
-              Add to Cart
-            </button>
-          </div>
+          {isInCart ? (
+            <div
+              className="card-actions justify-center"
+              style={{ border: '1px solid grey' }}>
+              <button
+                className="btn btn-neutral btn-outline"
+                onClick={() => decrementCart(id)}>
+                -
+              </button>
+              <p style={{ padding: '10px', textAlign: 'center' }}>
+                {currentQty}
+              </p>
+              <button
+                className="btn btn-neutral btn-outline"
+                onClick={() => incrementCart(id)}>
+                +
+              </button>
+            </div>
+          ) : (
+            <div className="card-actions justify-center">
+              <button className="btn btn-primary" onClick={handleAddToCart}>
+                Add to Cart
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
