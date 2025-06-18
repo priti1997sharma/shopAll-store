@@ -42,7 +42,6 @@ h1 {
   width: 50%;
 }
 
-
 .ProductListing {
   display: flex;
   justify-content: center;
@@ -58,5 +57,24 @@ h1 {
 
 .cartNo {
   padding: 10px;
+}
 
+.abtImg {
+  padding: 50px;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.text {
+  font-size: 15px;
+  line-height: 2.5em;
+  text-align: left;
+  font-style: normal;
+  font-family: 'arial';
+  padding: 50px;
+}
+
+.heading {
+  font-size: 30px;
+  font-weight: bold;
 }

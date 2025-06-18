@@ -114,7 +114,7 @@ function Home() {
     if (index !== -1 && cartBox[index].quantity > 1) {
       cartBox[index].quantity -= 1
       localStorage.setItem('cartBox', JSON.stringify(cartBox))
-  
+      // setCartCounter(cartBox[index].quantity)
     } else if (index !== -1) {
       cartBox.splice(index, 1)
       localStorage.setItem('cartBox', JSON.stringify(cartBox))
@@ -137,13 +137,13 @@ function Home() {
     setProductList(newFilter)
   }
 
-  const incrementCart = (id, images, title, description, price, quantity) => {
-    addToCart(id, images, title, description, price, quantity)
+  const incrementCart = (id, images, title, description, price) => {
+    addToCart(id, images, title, description, price)
   }
 
-  const handleToggle = () => {
-    setTheme(theme == 'light' ? 'dark' : 'light')
-  }
+  // const handleToggle = () => {
+  //   setTheme(theme == 'light' ? 'dark' : 'light')
+  // }
 
   //
   return (
@@ -151,7 +151,11 @@ function Home() {
       <Navbar navCartCount={navCartCount} />
       <Head />
 
-      <div style={{ textAlign: 'center', margin: '20px' }}>
+      <div
+        style={{
+          textAlign: 'center',
+          margin: '20px',
+        }}>
         <input
           type="text"
           placeholder="Search product........"
@@ -162,12 +166,12 @@ function Home() {
         {addButton}
       </div>
 
-      <input
+      {/* <input
         type="checkbox"
         onChange={handleToggle}
         defaultChecked
         className="toggle"
-      />
+      /> */}
 
       <div className="card">
         {productList.length > 0 ? (

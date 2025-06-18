@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ProtectedNavBarList } from '../Pages/Protected/NavbarList'
 import { PublicNavBarList } from '../Pages/Public/NavBarList'
 
@@ -30,6 +30,8 @@ function Navbar({ navCartCount }) {
   }, [cartitem])
 
   console.log({ theme, navCartCount, cartitem, totalItem })
+
+  const navigate = useNavigate()
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -66,7 +68,13 @@ function Navbar({ navCartCount }) {
               <span className="text-lg font-bold">{totalItem || 0}</span>
               <span className="text-info">Subtotal: $ ({totalPrice})</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <button
+                  className="btn btn-primary btn-block"
+                  onClick={() => {
+                    navigate('/viewCart')
+                  }}>
+                  View cart
+                </button>
               </div>
             </div>
           </div>

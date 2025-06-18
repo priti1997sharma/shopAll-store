@@ -8,7 +8,9 @@ import Login from '../Auth/Login'
 import Logout from '../Auth/Logout'
 
 import UpdateProduct from './UpdateProduct'
-import ShoppingCart from './ShoppingCart'
+import ViewCart from './ViewCart'
+import Navbar from '../../Routes/Navbar'
+import Footer from '../Public/Footer'
 
 export const ProtectedRoutes = [
   {
@@ -16,11 +18,14 @@ export const ProtectedRoutes = [
     children: [
       { index: true, element: <Home /> }, // use `index` instead of repeating path: '/'
       { path: 'profile', element: <Profile /> },
+      { path: 'navbar', element: <Navbar /> },
       { path: 'login', element: <Login /> },
-      { path: 'shoppingCart', element: <ShoppingCart /> },
+      { path: 'viewCart', element: <ViewCart /> },
       { path: 'updateProduct', element: <UpdateProduct /> },
       { path: 'product', element: <Product /> },
       { path: 'profile', element: <Profile /> },
+      { path: 'Footer', element: <Footer /> },
+
       { path: 'logout', element: <Logout /> },
       { path: 'not-found', element: <NotFound /> },
       { path: '*', element: <Navigate to="/not-found" /> },
