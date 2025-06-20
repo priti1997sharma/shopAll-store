@@ -7,7 +7,9 @@ function Card(props) {
   const { cartitem, setCartItem } = useAppContext()
 
   const isInCart = cartitem?.some((item) => item.id === id)
-
+  const setCartToLocalStorage = (cart) => {
+    localStorage.setItem("cartBox", JSON.stringify(cart))
+  }
   const incrementCart = (productId) => {
     const updatedCart = cartitem.map((item) =>
       item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
@@ -36,8 +38,10 @@ function Card(props) {
       price,
       quantity: 1,
     }
-    console.log([...cartitem, selectedProduct])
-    setCartItem([...cartitem, selectedProduct])
+    const cartProducts = [...cartitem, selectedProduct];
+    console.log(cartProducts)
+    setCartItem(cartProducts)
+    setCartToLocalStorage(cartProducts)
   }
 
   console.log('Cart item ------------', cartitem)

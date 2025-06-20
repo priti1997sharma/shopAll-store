@@ -10,13 +10,16 @@ import { useAppContext } from '../../Utils/AppContext'
 function Home() {
   const [search, setSearch] = useState('')
   const [productList, setProductList] = useState([])
-  const [navCartCount, setNavCartCount] = useState(0)
-
+  const [navCartCount, setNavCartCount] = useState(0)  
+const { cartitem, setCartItem } = useAppContext()
   const { theme, setTheme } = useAppContext()
   console.log({ theme })
   let addButton = ''
 
   // const navigate = useNavigate()
+  useEffect(() => {
+    console.log(cartitem);
+  }, [cartitem, setCartItem])
 
   const handleSearchChange = (event) => {
     console.log('=========', event.target.value)
@@ -30,13 +33,10 @@ function Home() {
       const response = await axios.get(
         'https://dummyjson.com/products?limit=3  &skip=0'
       )
-      console.log(response)
-
       // load the cart data from local storage to the product list state
       let cartBox = JSON.parse(localStorage.getItem('cartBox'))
+      console.log(cartBox);
       cartBox = cartBox || []
-      console.log({ cartBox })
-
       cartBox.map((card) => {
         response.data.products.map((product) => {
           if (card.id === product.id) {
