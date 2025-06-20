@@ -11,6 +11,7 @@ import UpdateProduct from './UpdateProduct'
 import ViewCart from './ViewCart'
 import Navbar from '../../Routes/Navbar'
 import Footer from '../Public/Footer'
+import Deals from './Deals'
 
 export const ProtectedRoutes = [
   {
@@ -24,6 +25,7 @@ export const ProtectedRoutes = [
       { path: 'updateProduct', element: <UpdateProduct /> },
       { path: 'product', element: <Product /> },
       { path: 'profile', element: <Profile /> },
+      { path: 'deals', element: <Deals /> },
       { path: 'Footer', element: <Footer /> },
 
       { path: 'logout', element: <Logout /> },

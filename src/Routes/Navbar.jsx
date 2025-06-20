@@ -36,7 +36,9 @@ function Navbar({ navCartCount }) {
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">SHOP~ALL</a>
+        <Link to="/home" className="btn btn-ghost text-xl">
+          SHOP~ALL
+        </Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
@@ -53,7 +55,7 @@ function Navbar({ navCartCount }) {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />{' '}
+                />
               </svg>
               <span className="badge badge-sm indicator-item">
                 {/* {navCartCount} */}

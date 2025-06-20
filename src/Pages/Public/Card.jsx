@@ -36,6 +36,7 @@ function Card(props) {
       price,
       quantity: 1,
     }
+    console.log([...cartitem, selectedProduct])
     setCartItem([...cartitem, selectedProduct])
   }
 

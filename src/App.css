@@ -13,6 +13,7 @@
 .head {
   display: flex;
   justify-content: center;
+  background-color: rgb(74, 64, 83)
 }
 
 .hero {

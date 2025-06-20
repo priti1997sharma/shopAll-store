@@ -2,6 +2,10 @@ import React from 'react'
 import Navbar from '../../Routes/Navbar'
 import Head from './Head'
 import Footer from './Footer'
+import { TruckIcon } from '@heroicons/react/24/solid'
+import { ShoppingBagIcon } from '@heroicons/react/24/outline'
+import { UserCircleIcon } from '@heroicons/react/24/outline'
+import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline'
 
 function About() {
   return (
@@ -40,6 +44,62 @@ function About() {
             <br />
             Shop With Us On the Go
           </h1>
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          textAlign: 'center',
+          marginTop: '10%',
+        }}>
+        <div
+          style={{ border: '1px solid grey', width: '20%', padding: '20px' }}>
+          <TruckIcon
+            className=" text-white-600"
+            style={{ width: '20%', marginLeft: '40%', padding: '10px' }}
+          />
+          <span style={{ fontSize: '25px' }}>Free delivery</span>
+          <br />
+          <span style={{ fontSize: '15px' }}>To Your Door</span>
+        </div>
+        <div
+          style={{
+            border: '1px solid grey',
+            width: '20%',
+            padding: '20px',
+          }}>
+          <ShoppingBagIcon
+            className="text-white-600"
+            style={{ width: '20%', marginLeft: '40%', padding: '10px' }}
+          />
+          <span style={{ fontSize: '25px' }}>Local Pickup</span>
+          <br />
+          <span style={{ fontSize: '15px' }}>Check Out Locations</span>
+        </div>
+        <div
+          style={{ border: '1px solid grey', width: '20%', padding: '20px' }}>
+          <UserCircleIcon
+            className=" text-white-600"
+            style={{ width: '20%', marginLeft: '40%', padding: '10px' }}
+          />
+          <span style={{ fontSize: '25px' }}>Available for You</span> <br />
+          <span style={{ fontSize: '15px' }}>Online Support 24/7</span>
+        </div>
+        <div
+          style={{
+            border: '1px solid grey',
+            width: '20%',
+            padding: '20px',
+          }}>
+          <DevicePhoneMobileIcon
+            className=" text-white-600"
+            style={{ width: '20%', marginLeft: '40%', padding: '10px' }}
+          />
+          <span style={{ fontSize: '25px' }}>Order on Go</span>
+          <br />
+          <span style={{ fontSize: '15px' }}>Download Our App</span>
         </div>
       </div>
 
@@ -113,10 +173,8 @@ function About() {
           display: 'flex',
           justifyContent: 'center',
 
-          margin: '70px',
           padding: '50px',
           alignItems: 'center',
-          marginTop: '10%',
         }}>
         <div>
           <img src="src/assest/abt.avif" className="abtImg"></img>
@@ -150,29 +208,6 @@ function About() {
           </p>
         </div>
       </div>
-
-      {/* <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          textAlign: 'center',
-        }}>
-        <div style={{ border: '1px solid grey', width: '20%' }}>
-          Free delivery
-          <div>
-            <img src=""></img>
-          </div>
-        </div>
-        <div style={{ border: '1px solid grey', width: '20%', height: '20%' }}>
-          Local Pickup
-        </div>
-        <div style={{ border: '1px solid grey', width: '20%' }}>
-          Available for You
-        </div>
-        <div style={{ border: '1px solid grey', width: '20%' }}>
-          Order on Go
-        </div>
-      </div> */}
 
       {/* <div
         style={{
