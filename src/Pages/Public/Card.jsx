@@ -8,7 +8,7 @@ function Card(props) {
 
   const isInCart = cartitem?.some((item) => item.id === id)
   const setCartToLocalStorage = (cart) => {
-    localStorage.setItem("cartBox", JSON.stringify(cart))
+    localStorage.setItem('cartBox', JSON.stringify(cart))
   }
   const incrementCart = (productId) => {
     const updatedCart = cartitem.map((item) =>
@@ -38,8 +38,8 @@ function Card(props) {
       price,
       quantity: 1,
     }
-    const cartProducts = [...cartitem, selectedProduct];
-    console.log(cartProducts)
+    const cartProducts = [...cartitem, selectedProduct]
+    console.log('=================', cartProducts)
     setCartItem(cartProducts)
     setCartToLocalStorage(cartProducts)
   }

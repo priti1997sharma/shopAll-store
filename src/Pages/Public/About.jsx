@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../../Routes/Navbar'
-import Head from './Head'
+
 import Footer from './Footer'
 import { TruckIcon } from '@heroicons/react/24/solid'
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
@@ -11,9 +11,9 @@ function About() {
   return (
     <div>
       <Navbar />
-      <Head />
+      
       <div>
-        <img src="src/assest/c837a6_e0bc54d0bb0b429590e8f82d575a661f~mv2.avif"></img>
+        <img src="src/assest/aboutpage.avif"></img>
         <div
           style={{
             gridRow: '1',

@@ -9,7 +9,7 @@ import Home from './Home'
 import Footer from './Footer'
 import Navbar from '../../Routes/Navbar'
 import Card from './Card'
-import Head from './Head'
+
 import About from './About'
 // import About from '../About'
 
@@ -21,7 +21,7 @@ export const PublicRoutes = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: 'navbar', element: <Navbar /> },
-      { path: 'head', element: <Head /> },
+   
       { path: 'card', element: <Card /> },
       { path: 'footer', element: <Footer /> },
 

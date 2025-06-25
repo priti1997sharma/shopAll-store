@@ -4,21 +4,33 @@ import Footer from './Footer'
 import Navbar from '../../Routes/Navbar'
 import axios from 'axios'
 // import { useNavigate } from 'react-router-dom'
-import Head from './Head'
+// import Head from './Head'
 import { useAppContext } from '../../Utils/AppContext'
 
 function Home() {
-  const [search, setSearch] = useState('')
-  const [productList, setProductList] = useState([])
-  const [navCartCount, setNavCartCount] = useState(0)  
-const { cartitem, setCartItem } = useAppContext()
-  const { theme, setTheme } = useAppContext()
-  console.log({ theme })
+  // const [search, setSearch] = useState('')
+  // const [productList, setProductList] = useState([])
+  const [navCartCount, setNavCartCount] = useState(0)
+ 
+  // const { theme, setTheme } = useAppContext()
+  // console.log({ theme })
   let addButton = ''
+
+  // new
+
+  const {
+    cartitem,
+    setCartItem,
+    theme,
+    setTheme,
+    searchQuery,
+    productList,
+    setProductList,
+  } = useAppContext()
 
   // const navigate = useNavigate()
   useEffect(() => {
-    console.log(cartitem);
+    console.log(cartitem)
   }, [cartitem, setCartItem])
 
   const handleSearchChange = (event) => {
@@ -35,7 +47,7 @@ const { cartitem, setCartItem } = useAppContext()
       )
       // load the cart data from local storage to the product list state
       let cartBox = JSON.parse(localStorage.getItem('cartBox'))
-      console.log(cartBox);
+      console.log(cartBox)
       cartBox = cartBox || []
       cartBox.map((card) => {
         response.data.products.map((product) => {
@@ -52,18 +64,26 @@ const { cartitem, setCartItem } = useAppContext()
   }, [])
   //
 
-  useEffect(() => {
-    if (!search) {
-      return
-    }
-    console.log('filter is working on page load')
+  // useEffect(() => {
+  //   if (!search) {
+  //     return
+  //   }
+    // console.log('filter is working on page load')
 
-    const filterFunc = (product) =>
-      product.title.toLowerCase().includes(search.toLowerCase())
+    // new
 
-    const filtered = productList.filter(filterFunc)
-    setProductList(filtered)
-  }, [search])
+    const filteredProducts = searchQuery
+  ? productList.filter((product) =>
+      product.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  : productList
+
+    // const filterFunc = (product) =>
+    //   product.title.toLowerCase().includes(search.toLowerCase())
+
+  //   const filtered = productList.filter(filterFunc)
+  //   setProductList(filtered)
+  // }, [search])
 
   // Card Funcitonality
 
@@ -151,9 +171,11 @@ const { cartitem, setCartItem } = useAppContext()
   return (
     <>
       <Navbar navCartCount={navCartCount} />
-      <Head />
+      {/* <Head /> */}
 
-      <div
+      {/* new changes  */}
+
+      {/* <div
         style={{
           textAlign: 'center',
           margin: '20px',
@@ -172,7 +194,7 @@ const { cartitem, setCartItem } = useAppContext()
         />
 
         {addButton}
-      </div>
+      </div> */}
 
       {/* <input
         type="checkbox"
@@ -182,8 +204,8 @@ const { cartitem, setCartItem } = useAppContext()
       /> */}
 
       <div className="card">
-        {productList.length > 0 ? (
-          productList.map((item, index) => (
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((item, index) => (
             <Card
               key={index}
               id={item.id}
@@ -192,14 +214,11 @@ const { cartitem, setCartItem } = useAppContext()
               price={item.price}
               description={item.description}
               quantity={item.quantity}
-              // incrementCart={incrementCart}
-              // decrementCart={decrementCart}
             />
           ))
         ) : (
           <p style={{ textAlign: 'center' }}>No products found</p>
         )}
-        <br />
       </div>
 
       <Footer />

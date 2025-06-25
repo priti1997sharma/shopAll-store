@@ -7,12 +7,23 @@ const AppContext = createContext() //hmne appContext nam k variable m context ke
 export const AppProvider = ({ children }) => {
   const [theme, setTheme] = useState('light') //dark
   const [cartitem, setCartItem] = useState([])
+  const [productList, setProductList] = useState([])
+
+  
+  const [showSearch, setShowSearch] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const contextValue = {
     theme,
     setTheme,
     cartitem,
     setCartItem,
+    showSearch,
+    setShowSearch,
+    searchQuery,
+    setSearchQuery,
+    productList,
+    setProductList,
   }
 
   return (

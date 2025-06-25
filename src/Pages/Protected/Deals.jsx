@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Head from '../Public/Head'
 import Navbar from '../../Routes/Navbar'
 import Footer from '../Public/Footer'
 import { TruckIcon } from '@heroicons/react/24/solid'
@@ -25,7 +24,7 @@ function Deals() {
   return (
     <>
       <Navbar />
-      <Head />
+      
       <div
         className="imgContainer"
         style={{
