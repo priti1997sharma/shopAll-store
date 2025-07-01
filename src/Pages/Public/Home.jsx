@@ -8,11 +8,11 @@ import axios from 'axios'
 import { useAppContext } from '../../Utils/AppContext'
 
 function Home() {
-  // const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('')
   // const [productList, setProductList] = useState([])
   const [navCartCount, setNavCartCount] = useState(0)
  
-  // const { theme, setTheme } = useAppContext()
+   const { theme, setTheme } = useAppContext()
   // console.log({ theme })
   let addButton = ''
 
@@ -21,8 +21,6 @@ function Home() {
   const {
     cartitem,
     setCartItem,
-    theme,
-    setTheme,
     searchQuery,
     productList,
     setProductList,

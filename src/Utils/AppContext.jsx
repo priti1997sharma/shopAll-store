@@ -9,8 +9,6 @@ export const AppProvider = ({ children }) => {
   const [cartitem, setCartItem] = useState([])
   const [productList, setProductList] = useState([])
 
-  
-  const [showSearch, setShowSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   const contextValue = {
@@ -18,8 +16,6 @@ export const AppProvider = ({ children }) => {
     setTheme,
     cartitem,
     setCartItem,
-    showSearch,
-    setShowSearch,
     searchQuery,
     setSearchQuery,
     productList,

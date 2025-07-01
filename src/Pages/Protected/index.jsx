@@ -12,6 +12,7 @@ import ViewCart from './ViewCart'
 import Navbar from '../../Routes/Navbar'
 import Footer from '../Public/Footer'
 import Deals from './Deals'
+import Payment from './Payment'
 
 export const ProtectedRoutes = [
   {
@@ -27,6 +28,7 @@ export const ProtectedRoutes = [
       { path: 'profile', element: <Profile /> },
       { path: 'deals', element: <Deals /> },
       { path: 'Footer', element: <Footer /> },
+      {path: 'payment', element:<Payment/>},
 
       { path: 'logout', element: <Logout /> },
       { path: 'not-found', element: <NotFound /> },

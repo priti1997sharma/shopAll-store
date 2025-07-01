@@ -9,13 +9,11 @@ function Navbar({ navCartCount }) {
   const token = GetToken()
 
   const navigate = useNavigate()
-  // const [showSearch, setShowSearch] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
   // const [searchQuery, setSearchQuery] = useState('')
 
   const {
     cartitem,
-    showSearch,
-    setShowSearch,
     searchQuery,
     setSearchQuery,
     productList,

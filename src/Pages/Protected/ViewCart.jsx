@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Footer from '../Public/Footer'
 import Navbar from '../../Routes/Navbar'
-import { Navigate } from 'react-router-dom'
 
 function ViewCart() {
   const [products, setProducts] = useState([])
-  const [obj, setObj] = useState({
-    name: '',
-    lastName: '',
-    number: '',
-    address: '',
-    landmark: '',
-    city: '',
-    zipCode: '',
-    cstate: '',
-  })
+
+  // Create refs for each input field
+  const nameRef = useRef()
+  const lastNameRef = useRef()
+  const numberRef = useRef()
+  const addressRef = useRef()
+  const landmarkRef = useRef()
+  const cityRef = useRef()
+  const zipCodeRef = useRef()
+  const cstateRef = useRef()
 
   useEffect(() => {
     const cartBox = JSON.parse(localStorage.getItem('cartBox')) || []
@@ -32,153 +31,157 @@ function ViewCart() {
     0
   )
 
-  // Load data from local storage on component mount
-
-  useEffect(() => {
-    const storedFormData = localStorage.getItem('myForm')
-    if (storedFormData) {
-      setObj(JSON.parse(storedFormData))
-    }
-  }, [])
-
-  // Handle input changes and update state
-
-  const handleUpdate = (e) => {
-    const { name, value } = e.target
-
-    setObj((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }))
-  }
-
-  // save data into local storage
   const handleSubmit = (e) => {
     e.preventDefault()
-    localStorage.setItem('myForm', JSON.stringify(obj))
+
+    const formData = {
+      name: nameRef.current.value,
+      lastName: lastNameRef.current.value,
+      number: numberRef.current.value,
+      address: addressRef.current.value,
+      landmark: landmarkRef.current.value,
+      city: cityRef.current.value,
+      zipCode: zipCodeRef.current.value,
+      cstate: cstateRef.current.value,
+    }
+
+    localStorage.setItem('myForm', JSON.stringify(formData))
     alert('Form data saved to local storage!')
+
+    // Clear form after submit
+    nameRef.current.value = ''
+    lastNameRef.current.value = ''
+    numberRef.current.value = ''
+    addressRef.current.value = ''
+    landmarkRef.current.value = ''
+    cityRef.current.value = ''
+    zipCodeRef.current.value = ''
+    cstateRef.current.value = ''
+  }
+
+  const handleClick = () => {
+    localStorage.removeItem('myForm')
+
+    // Clear input fields
+    nameRef.current.value = ''
+    lastNameRef.current.value = ''
+    numberRef.current.value = ''
+    addressRef.current.value = ''
+    landmarkRef.current.value = ''
+    cityRef.current.value = ''
+    zipCodeRef.current.value = ''
+    cstateRef.current.value = ''
+  }
+
+  const handlepayment =()=>{
+    
   }
 
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-gray-100 py-10 px-4">
-        <h1 className="text-3xl font-bold text-center mb-10">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold text-center mb-10 text-black">
+          Shopping Cart
+        </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
-          {/* Shipping Form Section */}
+          {/* Shipping Form */}
           <div className="bg-black rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-semibold mb-4">Shipping Details</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-semibold text-white">
+                Shipping Details
+              </h2>
+              <button className="btn btn-neutral text-lg" onClick={handleClick}>
+                Clear
+              </button>
+            </div>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium">
-                    First Name
-                  </label>
-
-                  <input
-                    type="text"
-                    name="name"
-                    value={obj.name}
-                    onChange={handleUpdate}
-                    className="mt-1 block w-full border rounded-md p-2"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium">Last Name</label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={obj.lastName}
-                    onChange={handleUpdate}
-                    className="mt-1 block w-full  border rounded-md p-2"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">Phone No.</label>
                 <input
-                  type="number"
-                  name="number"
-                  value={obj.number}
-                  onChange={handleUpdate}
-                  className="mt-1 block w-full  border rounded-md p-2"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium">
-                  Building / Street No.
-                </label>
-                <input
+                  ref={nameRef}
                   type="text"
-                  name="address"
-                  value={obj.address}
-                  onChange={handleUpdate}
-                  className="mt-1 block w-full  border rounded-md p-2"
+                  placeholder="First Name"
+                  className="w-full border p-2 rounded"
+                  required
+                />
+                <input
+                  ref={lastNameRef}
+                  type="text"
+                  placeholder="Last Name"
+                  className="w-full border p-2 rounded"
+                  required
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium">Landmark</label>
-                <input
-                  type="text"
-                  name="landmark"
-                  value={obj.landmark}
-                  onChange={handleUpdate}
-                  className="mt-1 block w-full  border rounded-md p-2"
-                />
-              </div>
+              <input
+                ref={numberRef}
+                type="text"
+                placeholder="Phone Number"
+                className="w-full border p-2 rounded"
+                required
+                onKeyPress={(e) => {
+                  if (!/[0-9]/.test(e.key)) {
+                    e.preventDefault()
+                  }
+                }}
+                maxLength={10}
+              />
+              <input
+                ref={addressRef}
+                type="text"
+                placeholder="Street / Building"
+                className="w-full border p-2 rounded"
+                required
+              />
+              <input
+                ref={landmarkRef}
+                type="text"
+                placeholder="Landmark"
+                className="w-full border p-2 rounded"
+              />
 
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={obj.city}
-                    onChange={handleUpdate}
-                    className="mt-1 block w-full  border rounded-md p-2"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium  text-grey-200">
-                    Zip Code
-                  </label>
-                  <input
-                    type="text"
-                    name="zipCode"
-                    value={obj.zipCode}
-                    onChange={handleUpdate}
-                    className="mt-1 block w-full  border rounded-md p-2"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-grey-200">
-                  State
-                </label>
                 <input
+                  ref={cityRef}
                   type="text"
-                  name="cstate"
-                  value={obj.cstate}
-                  onChange={handleUpdate}
-                  className="mt-1 block w-full  border rounded-md p-2"
+                  placeholder="City"
+                  className="w-full border p-2 rounded"
+                  required
+                />
+                <input
+                  ref={zipCodeRef}
+                  type="text"
+                  placeholder="ZIP Code"
+                  className="w-full border p-2 rounded"
+                  required
+                  maxLength={6}
+                  onKeyPress={(e) => {
+                    if (!/[0-5]/.test(e.key)) {
+                      e.preventDefault()
+                    }
+                  }}
                 />
               </div>
+
+              <input
+                ref={cstateRef}
+                type="text"
+                placeholder="State"
+                className="w-full border p-2 rounded"
+                required
+              />
 
               <button
                 type="submit"
-                className=" mt-3 w-full bg-indigo-600 text-white text-xl font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition">
+                className="w-full mt-4 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
                 Save
               </button>
             </form>
           </div>
 
-          {/* Cart Items Section */}
-          <div className="bg-grey rounded-lg shadow-md p-6">
+          {/* Cart Section (unchanged) */}
+          <div className="bg-white rounded-lg shadow-md p-6">
             {products.length === 0 ? (
               <p className="text-center text-black-700 text-xl font-semibold">
                 Your cart is empty.
@@ -224,8 +227,8 @@ function ViewCart() {
 
             {products.length > 0 && (
               <div className="mt-6 text-right">
-                <p className="text-xl font-semibold text-black  ">
-                  Subtotal : {''}
+                <p className="text-xl font-semibold text-black">
+                  Subtotal:{' '}
                   <span className="text-indigo-600">
                     ${subtotal.toFixed(2)}
                   </span>
@@ -234,15 +237,13 @@ function ViewCart() {
             )}
 
             <button
-              // onClick={handSubmit}
               type="submit"
-              className=" mt-5 w-full bg-indigo-600 text-white text-xl font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition position-fixed">
-              Palce Your Order
+              onClick={handlepayment}
+              className="mt-5 w-full bg-indigo-600 text-white text-xl font-semibold py-2 px-4 rounded-md hover:bg-indigo-700 transition">
+              Proceed with payment...
             </button>
           </div>
         </div>
-
-        <div></div>
       </div>
       <Footer />
     </>
